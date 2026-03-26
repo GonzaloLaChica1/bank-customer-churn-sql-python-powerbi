@@ -1,47 +1,52 @@
 # Bank Customer Churn Analysis
 
-End-to-end bank customer churn analysis using SQL, Python, statistical testing, machine learning, and Power BI.
+This project explores why bank customers leave and how a business could respond earlier using data. It combines Python, SQL, statistical testing, machine learning, and Power BI to move from raw customer records to practical churn insights and retention recommendations.
 
-## Overview
+The goal was not just to train a model, but to build an end-to-end workflow: clean the data, structure it for analysis, test meaningful business questions, compare predictive models, and present the results in a way a non-technical audience can actually use.
 
-This project analyzes bank customer churn from raw data preparation through SQL ingestion, statistical testing, predictive modeling, and business-facing dashboard design. The goal is to identify customers at risk of leaving, explain the main churn drivers, and support retention decisions with both analytical evidence and clear reporting.
+## What This Project Covers
 
-## Business Problem
+- Data cleaning and preparation in Python
+- SQL Server ingestion and querying
+- Statistical testing to examine churn drivers
+- Predictive modeling with multiple classification algorithms
+- Power BI dashboard design for business reporting
 
-Banks lose revenue when valuable customers churn. This project focuses on three questions:
+## Business Questions
 
-- Which customer segments show the highest churn risk?
-- Which variables meaningfully relate to churn behavior?
-- Which predictive model best supports early retention action?
+This analysis focuses on a few practical questions:
+
+- Which customers are most likely to churn?
+- Which variables are truly associated with churn behavior?
+- Which model gives the best balance between identifying churners and maintaining reliable predictions?
+- How can these findings be turned into retention actions a bank could use?
 
 ## Project Workflow
 
-1. Clean and validate the source data in Python.
-2. Export processed customer, account, and geography tables.
-3. Load processed data into SQL Server.
-4. Run SQL analysis and statistical testing.
-5. Build preprocessing artifacts and train classification models.
-6. Compare models using recall, precision, F1, and ROC-AUC.
-7. Present business insights in a Power BI dashboard.
+1. Clean and validate the raw customer data.
+2. Split the dataset into structured tables for customer, account, and geography information.
+3. Load the processed data into SQL Server.
+4. Explore churn patterns with SQL and hypothesis testing.
+5. Engineer features and prepare training and test datasets.
+6. Train and compare multiple classification models.
+7. Summarize the results in Power BI for business-facing communication.
 
-## Tools and Technologies
+## Tools Used
 
 - Python
 - pandas, NumPy, scikit-learn, XGBoost
-- SQL Server and pyodbc
+- SQL Server
 - Jupyter notebooks
 - Power BI
 
-## Key Insights
+## Key Findings
 
-- Customer inactivity is meaningfully associated with churn and is one of the strongest business signals in the project.
-- Geography and segment views help identify concentrated churn risk pockets.
-- Account balance alone is not a strong standalone churn driver based on the statistical testing.
-- Model selection depends on business priority: overall discrimination versus recall for at-risk customers.
+- Customer inactivity appears to be one of the strongest indicators of churn.
+- Geography-based patterns help reveal concentrated churn risk across customer segments.
+- Balance by itself was not a strong standalone churn driver in the statistical testing.
+- Different models perform well for different business priorities, especially when comparing overall discrimination versus recall.
 
 ## Model Performance
-
-The project compares several machine learning models for churn prediction.
 
 | Model | Recall | Precision | F1 | ROC-AUC |
 |---|---:|---:|---:|---:|
@@ -51,109 +56,70 @@ The project compares several machine learning models for churn prediction.
 | SVM RBF | 0.674 | 0.737 | 0.704 | 0.830 |
 | XGBoost | 0.625 | 0.759 | 0.686 | 0.836 |
 
-Interpretation:
+In this project, `XGBoost` produced the strongest ROC-AUC, while `SVM RBF` achieved the highest recall. If the business priority is catching as many likely churners as possible, `SVM RBF` is the strongest choice from the models tested here.
 
-- `XGBoost` achieved the strongest ROC-AUC.
-- `SVM_RBF` achieved the strongest churn recall.
-- If the business goal is to identify as many likely churners as possible, `SVM_RBF` is the strongest final choice.
+## Dashboard
 
-## Power BI Dashboard
+The Power BI report is organized around three views:
 
-The dashboard is structured into three report pages:
+- Executive overview with core KPIs and churn segmentation
+- Churn drivers to highlight high-risk patterns
+- Model performance and retention recommendations
 
-### 1. Executive Overview
+When you export dashboard screenshots, place them in `images/` and reference them here.
 
-High-level KPIs and segmentation views:
-
-- Total customers
-- Total churned customers
-- Churn rate
-- Active customer share
-- Average balance
-- Average salary
-- Churn rate by geography, activity status, age group, gender, and product count
-
-### 2. Churn Drivers
-
-Deeper analysis of customer risk patterns:
-
-- Geography by activity status matrix
-- Geography by age group heat map
-- Churn rate by tenure group
-- Churn rate by balance band
-- Balance distribution by churn status
-- Top risk customer segments
-
-### 3. Model Performance and Retention Actions
-
-Model comparison and business action summary:
-
-- Best ROC-AUC model
-- Best recall model
-- Final selected model
-- Model comparison visuals
-- Retention recommendations
-
-## Dashboard Preview
-
-Add exported screenshots from Power BI to an `images/` folder and reference them here.
-
-Suggested files:
-
-- `images/executive_overview.png`
-- `images/churn_drivers.png`
-- `images/model_actions.png`
-
-Example markdown after you export screenshots:
+Example:
 
 ```md
 ![Executive Overview](images/executive_overview.png)
 ![Churn Drivers](images/churn_drivers.png)
-![Model Performance and Retention Actions](images/model_actions.png)
+![Model Performance](images/model_actions.png)
 ```
 
-## Repository Structure
+## Project Structure
 
 ```text
 .
 |-- data/
 |   |-- raw/
 |   `-- processed/
+|-- documentation/
+|-- images/
 |-- predictive_modelling/
+|   |-- building/
 |   |-- experiments/
 |   `-- processed_data/
 |-- scripts/
 |   |-- data_cleaning/
 |   `-- data_ingestion/
 |-- statistical_testing/
-|-- documentation/
 |-- Queries.sql
 |-- connection_test.py
 |-- requirements.txt
 `-- README.md
 ```
 
-## Main Components
+## Repository Highlights
 
 ### Data Cleaning
 
-The cleaning scripts under `scripts/data_cleaning/` prepare and validate the customer, account, and geography datasets.
+The scripts in `scripts/data_cleaning/` prepare the raw source data and separate it into usable analysis tables.
 
 ### SQL Ingestion
 
-`scripts/data_ingestion/sql_connection.py` loads processed CSV files into SQL Server tables for querying and downstream analysis.
+`scripts/data_ingestion/sql_connection.py` loads processed CSV files into SQL Server for querying and downstream modeling work.
 
 ### Statistical Testing
 
-`statistical_testing/statistical_testing.ipynb` tests business hypotheses around churn, including balance, activity status, and geography-based comparisons.
+`statistical_testing/statistical_testing.ipynb` explores whether churn is meaningfully related to variables such as geography, activity status, and balance.
 
 ### Predictive Modeling
 
-The notebooks in `predictive_modelling/experiments/` compare Logistic Regression, Random Forest, SVM, and XGBoost models for churn classification.
+The notebooks in `predictive_modelling/experiments/` compare Logistic Regression, Random Forest, SVM, and XGBoost models for churn prediction.
 
-### Dashboarding
+### Business Reporting
 
-The final business reporting layer is built in Power BI around churn KPIs, churn drivers, and retention recommendations.
+The final Power BI dashboard translates the technical work into business-friendly insights and recommended retention actions.
 
 ## How To Run
 
@@ -178,7 +144,7 @@ pip install -r requirements.txt
 
 ### 4. Configure SQL Server credentials
 
-Create a local `.env` file or export these variables in your shell:
+Export these environment variables locally:
 
 ```bash
 export BANK_CHURN_DB_SERVER="127.0.0.1,1433"
@@ -201,21 +167,12 @@ python connection_test.py
 
 ### 7. Run preprocessing and model experiments
 
-- Use `predictive_modelling/processed_data/preprocessing.py` to build preprocessing artifacts
+- Run `predictive_modelling/processed_data/preprocessing.py`
 - Open the notebooks in `predictive_modelling/experiments/` to train and evaluate models
-
-## Publishing Checklist
-
-Before pushing this repository publicly:
-
-- Confirm no local credentials are stored in notebooks or source files.
-- Keep `myenv/`, temporary files, and local artifacts out of GitHub.
-- Export and add Power BI screenshots to the README.
-- If you want to share the dashboard file, add the `.pbix` file only if size and data permissions allow it.
 
 ## Business Recommendations
 
 - Prioritize inactive customers for retention outreach.
 - Focus on high-risk geography and segment combinations first.
-- Use the selected model as an early warning system to flag likely churners.
-- Combine model output with segment-level business rules instead of relying on one variable such as balance.
+- Use model predictions as an early warning system rather than a standalone decision-maker.
+- Combine model output with business rules for stronger retention strategy design.
