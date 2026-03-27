@@ -71,9 +71,7 @@ When you export dashboard screenshots, place them in `images/` and reference the
 Example:
 
 ```md
-![Executive Overview](images/executive_overview.png)
-![Churn Drivers](images/churn_drivers.png)
-![Model Performance](images/model_actions.png)
+Churn Drivers.png
 ```
 
 ## Project Structure
